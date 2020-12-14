@@ -546,7 +546,7 @@ The variables in N3 are either universally or exisistentially quantified. In thi
 </p>
 
 <p>
-We call a formula which does not contain blank nodes or universal variables ground formula. We call a formula which does not contain universal variables closed formula.
+We call a formula which does not contain blank nodes or universal variables ground formula. We call a formula which does not contain universal variables closed formula. Analogously, we call a term without blank nodes or universals ground and a term without universals closed.
 </p>
 
 
@@ -561,11 +561,11 @@ We call a formula which does not contain blank nodes or universal variables grou
         <li>A mapping |IEXT| from |IP| into the powerset of |IR|×|IR| i.e. the set of sets of pairs (|x|,|y|) with |x| and |y| in |IR|.</li>
         <li>A mapping |IS| from <a>IRIs</a> into |IR|∪|IP|.</li>
         <li>A partial mapping |IL| from <a>literals</a> into |IR|∪|IP|.</li>
-        <li>A mapping |IQ| from the set of quoted ground formulas into |IR|∪|IP|.</li>
+        <li>A mapping |IQ| from the set of quoted closed formulas into |IR|∪|IP|.</li>
         <li>A mapping |IC| from the set of lists into |IR|∪|IP|.</li>
       </ol>
 
-      <p>This definition is identical to the definition of <dfn data-cite="RDF11-MT#dfn-simple-interpretation">simple interpretation</dfn> [[RDF11-MT]], except for the interpretation functions for ground quoted formulas and ground lists, and the extension of the range of |IL| which here can also include elements of |IP|. N3 is les restrictive than RDF and allows all kinds of terms to occur in subject predicate and object position. </p>
+      <p>This definition is identical to the definition of <dfn data-cite="RDF11-MT#dfn-simple-interpretation">simple interpretation</dfn> [[RDF11-MT]], except for the interpretation functions for ground quoted formulas and ground lists, and the extension of the range of |IL| which here can also include elements of |IP|. N3 is less restrictive than RDF and allows all kinds of terms to occur in subject predicate and object position. </p>
 
         <h3>Semantic condition for ground formulas</h3>
         <p>The denotation of a <a>ground N3 formula</a> in an <a>simple N3 interpretation</a> |I| is then given by the following rules, where the interpretation is also treated as a function from expressions (terms, triples and graphs) to elements of the universe and truth values:</p>
@@ -575,15 +575,26 @@ We call a formula which does not contain blank nodes or universal variables grou
           <li>if |E| is an <a>IRI</a> then |I|(|E|) = |IS|(|E|)</li>
           <li>if |E| is a <a>quoted formula</a> then |I|(|E|) = |IQ|(|E|)</li>
           <li>if |E| is an <a>N3 triple</a> (|s|,|p|,|o|) with |p| &ne; =&gt;, or |s| or |p| no quoted formulas nor boolean literals then |I|(|E|) = true if (|I|(|s|),|I|(|o|)) ∈ |IEXT|(|I|(|p|))</li>
-         <li>if |E| is an <a>N3 triple </a> ({f},=&gt,{g}) with {f} and {g} quoted formulas, then |I|(|E|) = true if  |I|(g)=true if |I|(f)=true </li> 
-         <li>if |E| is an <a>N3 triple </a> (false,=&gt,{g}) and {g} a quoted formula, then |I|(|E|) = true</li> 
-         <li>if |E| is an <a>N3 triple </a> (true,=&gt,{g}) and {g} a quoted formula, then |I|(|E|) = true if |I|(g)=true</li> 
-         <li>if |E| is an <a>N3 triple </a> ({f},=&gt,false) and {f} a quoted formula, then |I|(|E|) = true if |I|(f)=false</li>
-         <li>if |E| is an <a>N3 triple </a> ({f},=&gt,true) and {f} a quoted formula, then |I|(|E|) = true</li>
+         <li>if |E| is an <a>N3 triple </a> ({f},=&gt;,{g}) with {f} and {g} quoted formulas, then |I|(|E|) = true if  |I|(g)=true if |I|(f)=true </li> 
+         <li>if |E| is an <a>N3 triple </a> (false,=&gt;,{g}) and {g} a quoted formula, then |I|(|E|) = true</li> 
+         <li>if |E| is an <a>N3 triple </a> (true,=&gt;,{g}) and {g} a quoted formula, then |I|(|E|) = true if |I|(g)=true</li> 
+         <li>if |E| is an <a>N3 triple </a> ({f},=&gt;,false) and {f} a quoted formula, then |I|(|E|) = true if |I|(f)=false</li>
+         <li>if |E| is an <a>N3 triple </a> ({f},=&gt;,true) and {f} a quoted formula, then |I|(|E|) = true</li>
          <li>if |E| is a ground N3 graph then |I|(|E|) = false if |I|(|E|') = false for some triple |E|' in |E|, otherwise |I|(|E|) =true.</li>
         </ul>
 
       </section>
+      <section>
+        <h2>Semantic condition with blank nodes</h2>
+        
+renaming function for blank nodes (IQ should work for renaming, condition on renaming function?), normal function A
+      </section>
+      <section>
+        <h2>Semantic condition with universals</h2>
+ function which maps to closed terms (careful,avoid recursion for =&gt; cases), do I additionally need the A? -> no, since there is no A inherited from RDF 
+      </section>
+
+
       <section id='sneg'>
         <h3>Scoped Negation</h3>
         <p>Bla...</p>
