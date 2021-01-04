@@ -474,7 +474,7 @@ _:dominik foaf:knows _:doerthe .
         <p>
           The set of <dfn id="dfn-triple-elements">N3 terms</dfn> consists of the disjoint sets of <a data-cite="RDF11-CONCEPTS#dfn-iri">IRIs</a>, 
           <a data-cite="RDF11-CONCEPTS#dfn-blank-node">blank nodes</a>, <a data-cite="RDF11-CONCEPTS#dfn-literal">literals</a>, 
-          <a href="#dfn-universals">universal variables</a>, <a href="#lists">lists</a> and <a href="#quotes">quoted graphs</a>. In the set of <a data-cite="RDF11-CONCEPTS#dfn-iri">IRIs</a> there is one symbol with a special meaning, namely <code>log:implies</code>. This symbol indicates logical implication and can in N3-turtle syntax also be represented using the symbols <code>=&gt;</code>. The set of literals contains the two boolean literals <code>false</code> and true <code>true</code>. The latter can also be written as <code>{}</code> in N3 turtle syntax.
+          <a href="#dfn-universals">universal variables</a>, <a href="#lists">lists</a> and <a href="#quotes">quoted graphs</a>. In the set of <a data-cite="RDF11-CONCEPTS#dfn-iri">IRIs</a> there is one symbol with a special meaning, namely <code>log:implies</code>. This symbol indicates logical implication and can in N3-turtle syntax also be represented using the symbols <code>=&gt;</code>. The set of literals contains the two boolean literals <code>false</code> and <code>true</code>. The latter can also be written as <code>{}</code> in N3 turtle syntax.
         </p>
      <!--     <p>
           The set of <dfn id="dfn-quantifiers">N3 quantifiers</dfn> consists of the universal quantifier and the existential quantifier. In <abbr title="Notation3">N3</abbr>-turtle 
@@ -491,7 +491,7 @@ _:dominik foaf:knows _:doerthe .
           The empty list in N3 is equivalent to the empty list in RDF and can thus also be represented using <a href="https://www.w3.org/TR/rdf11-mt/#rdf-interpretations">rdf:nil</a>.
         </p>
         <p>
-          <dfn id="quotes">Quoted graphs</dfn> are N3 formulas which are surrounded by quoting signs. 
+          <dfn id="quotes">Quoted graphs orquoted formulas</dfn> are N3 formulas which are surrounded by quoting signs. 
           In N3 turtle syntax we denote these quoting signs as curly brackets <code>{}</code>.
         </p>
      <!-- </section>
@@ -546,7 +546,7 @@ The variables in N3 are either universally or exisistentially quantified. In thi
 </p>
 
 <p>
-We call a formula which does not contain blank nodes or universal variables ground formula. We call a formula which does not contain universal variables closed formula. Analogously, we call a term without blank nodes or universals ground and a term without universals closed.
+We call a term which is  not a universal variable or a blank node and which does not contain universal variables orblank nodesa a <dfn id="ground-term">ground term</dfn>. We call a formula only consisting of gtound terms a <dfn id="ground-formula">ground formula</dfn>. We call a formula which does not contain universal variables <dfn id="closed-formula">closed formula</dfn>. We call all terms which  are no blank nodes or universal variables and which do not contain universals <dfn id="closed-term">closed terms</dfn>.
 </p>
 
 
@@ -559,22 +559,23 @@ We call a formula which does not contain blank nodes or universal variables grou
         <li>A non-empty set |IR| of resources, called the domain or universe of |I|.</li>
         <li>A set |IP|, called the set of properties of |I|.</li>
         <li>A mapping |IEXT| from |IP| into the powerset of |IR|×|IR| i.e. the set of sets of pairs (|x|,|y|) with |x| and |y| in |IR|.</li>
-        <li>A mapping |IS| from <a>IRIs</a> into |IR|∪|IP|.</li>
-        <li>A partial mapping |IL| from <a>literals</a> into |IR|∪|IP|.</li>
+        <li>A mapping |IS| from <a data-cite="RDF11-CONCEPTS#dfn-iri">IRIs</a> into |IR|∪|IP|.</li>
+        <li>A partial mapping |IL| from <a data-cite="RDF11-CONCEPTS#dfn-literal">literals</a> into |IR|∪|IP|.</li>
         <li>A mapping |IQ| from the set of quoted closed formulas into |IR|∪|IP|.</li>
-        <li>A mapping |IC| from the set of lists into |IR|∪|IP|.</li>
+        <li>A mapping |IC| from the set of ground lists into |IR|∪|IP|.</li>
       </ol>
 
-      <p>This definition is identical to the definition of <dfn data-cite="RDF11-MT#dfn-simple-interpretation">simple interpretation</dfn> [[RDF11-MT]], except for the interpretation functions for ground quoted formulas and ground lists, and the extension of the range of |IL| which here can also include elements of |IP|. N3 is less restrictive than RDF and allows all kinds of terms to occur in subject predicate and object position. </p>
+      <p>This definition is identical to the definition of <dfn data-cite="RDF11-MT#dfn-simple-interpretation">simple interpretation</dfn> [[RDF11-MT]], except for the interpretation functions for ground quoted formulas and ground lists, and the extension of the range of |IL| which here can also include elements of |IP|. N3 is less restrictive than RDF and allows all kinds of terms to occur in subject, predicate and object position. </p>
 
         <h3>Semantic condition for ground formulas</h3>
-        <p>The denotation of a <a>ground N3 formula</a> in an <a>simple N3 interpretation</a> |I| is then given by the following rules, where the interpretation is also treated as a function from expressions (terms, triples and graphs) to elements of the universe and truth values:</p>
+        <p>The denotation of a <a>ground formula</a> in an <a>simple N3 interpretation</a> |I| is then given by the following rules, where the interpretation is also treated as a function from expressions (terms, triples and graphs) to elements of the universe and truth values:</p>
 
         <ul id="semantic-condition-ground-formulas">
-          <li>if |E| is a <a>literal</a> then |I|(|E|) = |IL|(|E|)</li>
-          <li>if |E| is an <a>IRI</a> then |I|(|E|) = |IS|(|E|)</li>
-          <li>if |E| is a <a>quoted formula</a> then |I|(|E|) = |IQ|(|E|)</li>
-          <li>if |E| is an <a>N3 triple</a> (|s|,|p|,|o|) with |p| &ne; =&gt;, or |s| or |p| no quoted formulas nor boolean literals then |I|(|E|) = true if (|I|(|s|),|I|(|o|)) ∈ |IEXT|(|I|(|p|))</li>
+          <li>if |E| is a <a data-cite="RDF11-CONCEPTS#dfn-literal">literal</a> then |I|(|E|) = |IL|(|E|)</li>
+          <li>if |E| is an <a data-cite="RDF11-CONCEPTS#dfn-iri">IRI</a> then |I|(|E|) = |IS|(|E|)</li>
+          <li>if |E| is a <a href="#quotes">quoted formula</a> then |I|(|E|) = |IQ|(|E|)</li>
+          <li>if |E| is a <a href="#lists">list</a> then |I|(|E|) = |IC|(|E|)</li>
+          <li>if |E| is an <a>N3 triple</a> (|s|,|p|,|o|) with |p| &ne; =&gt;, or |s| or |p| no quoted formula nor boolean literal then |I|(|E|) = true if (|I|(|s|),|I|(|o|)) ∈ |IEXT|(|I|(|p|))</li>
          <li>if |E| is an <a>N3 triple </a> ({f},=&gt;,{g}) with {f} and {g} quoted formulas, then |I|(|E|) = true if  |I|(g)=true if |I|(f)=true </li> 
          <li>if |E| is an <a>N3 triple </a> (false,=&gt;,{g}) and {g} a quoted formula, then |I|(|E|) = true</li> 
          <li>if |E| is an <a>N3 triple </a> (true,=&gt;,{g}) and {g} a quoted formula, then |I|(|E|) = true if |I|(g)=true</li> 
